@@ -25,10 +25,7 @@ interface ListBoxProps {
     label?: string;
 }
 
-/**
- * Устарел, используем новые компоненты из папки redesigned
- * @deprecated
- */
+
 export function ListBox(props: ListBoxProps) {
     const {
         className,
@@ -56,7 +53,7 @@ export function ListBox(props: ListBoxProps) {
                 value={value}
                 onChange={onChange}
             >
-                <HListBox.Button disabled={readonly} className={cls.trigger}>
+                <HListBox.Button  className={cls.trigger}>
                     <Button disabled={readonly}>{value ?? defaultValue}</Button>
                 </HListBox.Button>
                 <HListBox.Options

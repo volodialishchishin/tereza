@@ -24,23 +24,23 @@ export const ArticlePageGreeting = memo(() => {
 
     const text = (
         <Text
-            title={t('Добро пожаловать на страницу статей')}
+            title={t('Ласкаво просимо до статей')}
             text={t(
-                'Здесь вы можете искать и просматривать статьи на различные темы',
+                'Тут ви можете почитати статті на різні теми',
             )}
         />
     );
 
     if (isMobile) {
         return (
-            <Drawer lazy isOpen={isOpen} onClose={onClose}>
+            <Drawer lazy isOpen={false} onClose={onClose}>
                 {text}
             </Drawer>
         );
     }
 
     return (
-        <Modal lazy isOpen={isOpen} onClose={onClose}>
+        <Modal lazy isOpen={false} onClose={onClose}>
             {text}
         </Modal>
     );

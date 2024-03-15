@@ -27,19 +27,11 @@ interface ArticleViewSelectorProps {
 const viewTypes = [
     {
         view: ArticleView.SMALL,
-        icon: toggleFeatures({
-            name: 'isAppRedesigned',
-            on: () => TiledIcon,
-            off: () => TiledIconDeprecated,
-        }),
+        icon: TiledIcon,
     },
     {
         view: ArticleView.BIG,
-        icon: toggleFeatures({
-            name: 'isAppRedesigned',
-            on: () => ListIcon,
-            off: () => ListIconDeprecated,
-        }),
+        icon: ListIcon,
     },
 ];
 
@@ -51,56 +43,27 @@ export const ArticleViewSelector = memo((props: ArticleViewSelectorProps) => {
     };
 
     return (
-        <ToggleFeatures
-            feature="isAppRedesigned"
-            on={
-                <Card
-                    className={classNames(
-                        cls.ArticleViewSelectorRedesigned,
-                        {},
-                        [className],
-                    )}
-                    border="round"
-                >
-                    <HStack gap="8">
-                        {viewTypes.map((viewType) => (
-                            <Icon
-                                clickable
-                                key={viewType.view}
-                                onClick={onClick(viewType.view)}
-                                Svg={viewType.icon}
-                                className={classNames('', {
-                                    [cls.notSelected]: viewType.view !== view,
-                                })}
-                            />
-                        ))}
-                    </HStack>
-                </Card>
-            }
-            off={
-                <div
-                    className={classNames(cls.ArticleViewSelector, {}, [
-                        className,
-                    ])}
-                >
-                    {viewTypes.map((viewType) => (
-                        <ButtonDeprecated
-                            key={viewType.view}
-                            theme={ButtonTheme.CLEAR}
-                            onClick={onClick(viewType.view)}
+        <Card
+                            className={classNames(
+                                cls.ArticleViewSelectorRedesigned,
+                                {},
+                                [className],
+                            )}
+                            border="round"
                         >
-                            <IconDeprecated
-                                width={24}
-                                height={24}
-                                Svg={viewType.icon}
-                                className={classNames('', {
-                                    [cls.notSelected]: viewType.view !== view,
-                                })}
-                            />
-                        </ButtonDeprecated>
-                    ))}
-                </div>
-            }
-        />
+                            <HStack gap="8">
+                                {viewTypes.map((viewType) => (
+                                    <Icon
+                                        clickable
+                                        key={viewType.view}
+                                        onClick={onClick(viewType.view)}
+                                        Svg={viewType.icon}
+                                        className={classNames('', {
+                                            [cls.notSelected]: viewType.view !== view,
+                                        })}
+                                    />
+                                ))}
+                            </HStack>
+                        </Card>
     );
 });

@@ -56,6 +56,7 @@ export const profileSlice = createSlice({
                 updateProfileData.fulfilled,
                 (state, action: PayloadAction<Profile>) => {
                     state.isLoading = false;
+                    console.log(action.payload);
                     state.data = action.payload;
                     state.form = action.payload;
                     state.readonly = true;

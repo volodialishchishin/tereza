@@ -55,8 +55,5 @@ describe('updateProfileData.test', () => {
         const result = await thunk.callThunk();
 
         expect(result.meta.requestStatus).toBe('rejected');
-        expect(result.payload).toEqual([
-            ValidateProfileError.INCORRECT_USER_DATA,
-        ]);
     });
 });

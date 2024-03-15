@@ -19,10 +19,11 @@ import {
     getRouteArticles,
     getRouteMain,
     getRouteProfile,
-    getRouteSettings,
+    getRouteSettings, getRouterCreateRoad,
 } from '@/shared/const/router';
 import { AppRoutesProps } from '@/shared/types/router';
 import { SettingsPage } from '@/pages/SettingsPage';
+import { RoadCreatePage } from '@/pages/RoadCreatePage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
@@ -60,6 +61,11 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.ARTICLE_EDIT]: {
         path: getRouteArticleEdit(':id'),
         element: <ArticleEditPage />,
+        authOnly: true,
+    },
+    [AppRoutes.ROAD_CREATE]: {
+        path: getRouterCreateRoad(),
+        element: <RoadCreatePage />,
         authOnly: true,
     },
     [AppRoutes.ADMIN_PANEL]: {

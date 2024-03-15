@@ -6,9 +6,22 @@ export const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-    if (config.headers) {
-        config.headers.Authorization =
-            localStorage.getItem(USER_LOCALSTORAGE_KEY) || '';
-    }
+    config.headers.Authorization = `Bearer ${localStorage.getItem(USER_LOCALSTORAGE_KEY)}`
     return config;
-});
+})
+
+$api.interceptors.response.use((config) => {
+    return config;
+},async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && error.config && !error.config._isRetry) {
+        originalRequest._isRetry = true;
+        try {
+            const response = await axios.post<{accessToken:string}>(`${__API__}/auth/refresh-token`, {withCredentials: true})
+            localStorage.setItem(USER_LOCALSTORAGE_KEY, response.data.accessToken);
+            return $api.request(originalRequest);
+        } catch (e) {
+        }
+    }
+    throw error;
+})

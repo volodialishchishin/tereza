@@ -18,11 +18,7 @@ export const NotificationList = memo((props: NotificationListProps) => {
         pollingInterval: 10000,
     });
 
-    const Skeleton = toggleFeatures({
-        name: 'isAppRedesigned',
-        on: () => SkeletonRedesigned,
-        off: () => SkeletonDeprecated,
-    });
+    const Skeleton = SkeletonRedesigned;
 
     if (isLoading) {
         return (

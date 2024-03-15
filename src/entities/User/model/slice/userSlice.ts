@@ -19,7 +19,7 @@ export const userSlice = createSlice({
     reducers: {
         setAuthData: (state, { payload }: PayloadAction<User>) => {
             state.authData = payload;
-            setFeatureFlags(payload.features);
+            console.log(payload);
             localStorage.setItem(USER_LOCALSTORAGE_KEY, payload.id);
             localStorage.setItem(
                 LOCAL_STORAGE_LAST_DESIGN_KEY,

@@ -4,9 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { useInitialEffect } from '@/shared/lib/hooks/useInitialEffect/useInitialEffect';
-import { Currency } from '@/entities/Currency';
-import { Country } from '@/entities/Country';
-import { Text, TextTheme } from '@/shared/ui/deprecated/Text';
+import { Text } from '@/shared/ui/redesigned/Text';
 import { ProfileCard } from '@/entities/Profile';
 import {
     DynamicModuleLoader,
@@ -46,13 +44,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
     const validateErrorTranslates = {
         [ValidateProfileError.SERVER_ERROR]: t(
             'Серверная ошибка при сохранении',
-        ),
-        [ValidateProfileError.INCORRECT_COUNTRY]: t('Некорректный регион'),
-        [ValidateProfileError.NO_DATA]: t('Данные не указаны'),
-        [ValidateProfileError.INCORRECT_USER_DATA]: t(
-            'Имя и фамилия обязательны',
-        ),
-        [ValidateProfileError.INCORRECT_AGE]: t('Некорректный возраст'),
+        )
     };
 
     useInitialEffect(() => {
@@ -103,19 +95,6 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
         [dispatch],
     );
 
-    const onChangeCurrency = useCallback(
-        (currency: Currency) => {
-            dispatch(profileActions.updateProfile({ currency }));
-        },
-        [dispatch],
-    );
-
-    const onChangeCountry = useCallback(
-        (country: Country) => {
-            dispatch(profileActions.updateProfile({ country }));
-        },
-        [dispatch],
-    );
 
     return (
         <DynamicModuleLoader reducers={reducers}>
@@ -125,7 +104,6 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
                     validateErrors.map((err) => (
                         <Text
                             key={err}
-                            theme={TextTheme.ERROR}
                             text={validateErrorTranslates[err]}
                             data-testid="EditableProfileCard.Error"
                         />
@@ -141,8 +119,6 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
                     onChangeCity={onChangeCity}
                     onChangeUsername={onChangeUsername}
                     onChangeAvatar={onChangeAvatar}
-                    onChangeCurrency={onChangeCurrency}
-                    onChangeCountry={onChangeCountry}
                 />
             </VStack>
         </DynamicModuleLoader>

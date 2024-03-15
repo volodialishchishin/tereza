@@ -16,10 +16,7 @@ interface SelectProps<T extends string> {
     readonly?: boolean;
 }
 
-/**
- * Устарел, используем новые компоненты из папки redesigned
- * @deprecated
- */
+
 export const Select = <T extends string>(props: SelectProps<T>) => {
     const { className, label, options, onChange, value, readonly } = props;
 

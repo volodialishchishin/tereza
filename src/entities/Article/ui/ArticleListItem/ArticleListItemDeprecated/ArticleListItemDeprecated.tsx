@@ -2,22 +2,22 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import cls from '../ArticleListItem.module.scss';
-import { Text } from '@/shared/ui/deprecated/Text';
-import { Icon } from '@/shared/ui/deprecated/Icon';
+import { Text } from '@/shared/ui/redesigned/Text';
+import { Icon } from '@/shared/ui/redesigned/Icon';
 import EyeIcon from '@/shared/assets/icons/eye-20-20.svg';
 import { ArticleTextBlock } from '../../../model/types/article';
 import {
     ArticleView,
     ArticleBlockType,
 } from '../../../model/consts/articleConsts';
-import { Card } from '@/shared/ui/deprecated/Card';
-import { Avatar } from '@/shared/ui/deprecated/Avatar';
+import { Card } from '@/shared/ui/redesigned/Card';
+import { Avatar } from '@/shared/ui/redesigned/Avatar';
 import { AppImage } from '@/shared/ui/redesigned/AppImage';
-import { Skeleton } from '@/shared/ui/deprecated/Skeleton';
+import { Skeleton } from '@/shared/ui/redesigned/Skeleton';
 import { ArticleTextBlockComponent } from '../../ArticleTextBlockComponent/ArticleTextBlockComponent';
-import { AppLink } from '@/shared/ui/deprecated/AppLink';
+import { AppLink } from '@/shared/ui/redesigned/AppLink';
 import { getRouteArticleDetails } from '@/shared/const/router';
-import { Button, ButtonTheme } from '@/shared/ui/deprecated/Button';
+import { Button } from '@/shared/ui/redesigned/Button';
 import { ArticleListItemProps } from '../ArticleListItem';
 
 export const ArticleListItemDeprecated = memo((props: ArticleListItemProps) => {
@@ -73,8 +73,8 @@ export const ArticleListItemDeprecated = memo((props: ArticleListItemProps) => {
                             target={target}
                             to={getRouteArticleDetails(article.id)}
                         >
-                            <Button theme={ButtonTheme.OUTLINE}>
-                                {t('Читать далее...')}
+                            <Button>
+                                {t('Читати далі')}
                             </Button>
                         </AppLink>
                         {views}

@@ -13,7 +13,7 @@ export const NotFoundPage = ({ className }: NotFoundPageProps) => {
             data-testid="NotFoundPage"
             className={classNames(cls.NotFoundPage, {}, [className])}
         >
-            {t('Страница не найдена')}
+            {t('Сторінка не знайдена')}
         </div>
     );
 };

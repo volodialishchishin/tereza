@@ -4,8 +4,6 @@ import { Card } from '@/shared/ui/redesigned/Card';
 import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
 import { Avatar } from '@/shared/ui/redesigned/Avatar';
 import { Input } from '@/shared/ui/redesigned/Input';
-import { CurrencySelect } from '@/entities/Currency';
-import { CountrySelect } from '@/entities/Country';
 import { ProfileCardProps } from '../ProfileCard/ProfileCard';
 import { Skeleton } from '@/shared/ui/redesigned/Skeleton';
 import { Text } from '@/shared/ui/redesigned/Text';
@@ -17,8 +15,8 @@ export const ProfileCardRedesignedError = () => {
         <HStack justify="center" max>
             <Text
                 variant="error"
-                title={t('Произошла ошибка при загрузке профиля')}
-                text={t('Попробуйте обновить страницу')}
+                title={t('Сталась помилка при загрузці профайлу')}
+                text={t('Попробуйте обновити сторінку')}
                 align="center"
             />
         </HStack>
@@ -63,8 +61,6 @@ export const ProfileCardRedesigned = memo((props: ProfileCardProps) => {
         onChangeCity,
         onChangeAvatar,
         onChangeUsername,
-        onChangeCountry,
-        onChangeCurrency,
     } = props;
     const { t } = useTranslation('profile');
 
@@ -80,27 +76,27 @@ export const ProfileCardRedesigned = memo((props: ProfileCardProps) => {
                     <VStack gap="16" max>
                         <Input
                             value={data?.first}
-                            label={t('Имя')}
+                            label={t('Імя')}
                             onChange={onChangeFirstname}
                             readonly={readonly}
                             data-testid="ProfileCard.firstname"
                         />
                         <Input
                             value={data?.lastname}
-                            label={t('Фамилия')}
+                            label={t('Прізвище')}
                             onChange={onChangeLastname}
                             readonly={readonly}
                             data-testid="ProfileCard.lastname"
                         />
                         <Input
                             value={data?.age}
-                            label={t('Возраст')}
+                            label={t('Вік')}
                             onChange={onChangeAge}
                             readonly={readonly}
                         />
                         <Input
                             value={data?.city}
-                            label={t('Город')}
+                            label={t('Місто')}
                             onChange={onChangeCity}
                             readonly={readonly}
                         />
@@ -108,24 +104,14 @@ export const ProfileCardRedesigned = memo((props: ProfileCardProps) => {
                     <VStack gap="16" max>
                         <Input
                             value={data?.username}
-                            label={t('Имя пользователя')}
+                            label={t('Імя користовуча')}
                             onChange={onChangeUsername}
                             readonly={readonly}
                         />
                         <Input
                             value={data?.avatar}
-                            label={t('Cсылка на аватар')}
+                            label={t('Аватар')}
                             onChange={onChangeAvatar}
-                            readonly={readonly}
-                        />
-                        <CurrencySelect
-                            value={data?.currency}
-                            onChange={onChangeCurrency}
-                            readonly={readonly}
-                        />
-                        <CountrySelect
-                            value={data?.country}
-                            onChange={onChangeCountry}
                             readonly={readonly}
                         />
                     </VStack>

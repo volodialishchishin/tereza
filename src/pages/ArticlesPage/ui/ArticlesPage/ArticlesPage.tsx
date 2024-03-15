@@ -44,40 +44,24 @@ const ArticlesPage = (props: ArticlesPageProps) => {
     });
 
     const content = (
-        <ToggleFeatures
-            feature="isAppRedesigned"
-            on={
-                <StickyContentLayout
-                    left={<ViewSelectorContainer />}
-                    right={<FiltersContainer />}
-                    content={
-                        <Page
-                            data-testid="ArticlesPage"
-                            onScrollEnd={onLoadNextPart}
-                            className={classNames(
-                                cls.ArticlesPageRedesigned,
-                                {},
-                                [className],
-                            )}
-                        >
-                            <ArticleInfiniteList className={cls.list} />
-                            <ArticlePageGreeting />
-                        </Page>
-                    }
-                />
-            }
-            off={
-                <Page
-                    data-testid="ArticlesPage"
-                    onScrollEnd={onLoadNextPart}
-                    className={classNames(cls.ArticlesPage, {}, [className])}
-                >
-                    <ArticlesPageFilters />
-                    <ArticleInfiniteList className={cls.list} />
-                    <ArticlePageGreeting />
-                </Page>
-            }
-        />
+        <StickyContentLayout
+                            left={<ViewSelectorContainer />}
+                            right={<FiltersContainer />}
+                            content={
+                                <Page
+                                    data-testid="ArticlesPage"
+                                    onScrollEnd={onLoadNextPart}
+                                    className={classNames(
+                                        cls.ArticlesPageRedesigned,
+                                        {},
+                                        [className],
+                                    )}
+                                >
+                                    <ArticleInfiniteList className={cls.list} />
+                                    <ArticlePageGreeting />
+                                </Page>
+                            }
+                        />
     );
 
     return (

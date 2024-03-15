@@ -33,50 +33,21 @@ export const NotificationButton = memo((props: NotificationButtonProps) => {
     }, []);
 
     const trigger = (
-        <ToggleFeatures
-            feature="isAppRedesigned"
-            on={
-                <Icon Svg={NotificationIcon} clickable onClick={onOpenDrawer} />
-            }
-            off={
-                <ButtonDeprecated
-                    onClick={onOpenDrawer}
-                    theme={ButtonTheme.CLEAR}
-                >
-                    <IconDeprecated Svg={NotificationIconDeprecated} inverted />
-                </ButtonDeprecated>
-            }
-        />
+        <Icon Svg={NotificationIcon} clickable onClick={onOpenDrawer} />
     );
 
     return (
         <div>
             <BrowserView>
-                <ToggleFeatures
-                    feature="isAppRedesigned"
-                    on={
-                        <Popover
-                            className={classNames(cls.NotificationButton, {}, [
-                                className,
-                            ])}
-                            direction="bottom left"
-                            trigger={trigger}
-                        >
-                            <NotificationList className={cls.notifications} />
-                        </Popover>
-                    }
-                    off={
-                        <PopoverDeprecated
-                            className={classNames(cls.NotificationButton, {}, [
-                                className,
-                            ])}
-                            direction="bottom left"
-                            trigger={trigger}
-                        >
-                            <NotificationList className={cls.notifications} />
-                        </PopoverDeprecated>
-                    }
-                />
+                <Popover
+                                            className={classNames(cls.NotificationButton, {}, [
+                                                className,
+                                            ])}
+                                            direction="bottom left"
+                                            trigger={trigger}
+                                        >
+                                            <NotificationList className={cls.notifications} />
+                                        </Popover>
             </BrowserView>
             <MobileView>
                 {trigger}
