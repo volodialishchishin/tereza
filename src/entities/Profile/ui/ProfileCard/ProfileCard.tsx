@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import React from 'react';
 import { Currency } from '@/entities/Currency';
 import { Country } from '@/entities/Country';
 import { Profile } from '../../model/types/profile';
@@ -20,7 +21,7 @@ export interface ProfileCardProps {
     onChangeCity?: (value?: string) => void;
     onChangeAge?: (value?: string) => void;
     onChangeUsername?: (value?: string) => void;
-    onChangeAvatar?: (value?: string) => void;
+    onChangeAvatar?: (event:React.ChangeEvent<HTMLInputElement>) => void;
     onChangeCurrency?: (currency: Currency) => void;
     onChangeCountry?: (country: Country) => void;
 }

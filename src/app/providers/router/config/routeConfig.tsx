@@ -19,11 +19,15 @@ import {
     getRouteArticles,
     getRouteMain,
     getRouteProfile,
-    getRouteSettings, getRouterCreateRoad,
+    getRouteSettings, getRouterCreateRoad, getRideCreate, getRouterSaveRide, getRouteChat, getRouteMyRides,
 } from '@/shared/const/router';
 import { AppRoutesProps } from '@/shared/types/router';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { RoadCreatePage } from '@/pages/RoadCreatePage';
+import { CreateRidePage } from '@/pages/RideCreatePage';
+import { SaveRidePage } from '@/pages/RideSavePage';
+import { Chat } from '@/pages/ChatPage';
+import { MyRides } from '@/pages/MyRides';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
@@ -82,5 +86,21 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.NOT_FOUND]: {
         path: '*',
         element: <NotFoundPage />,
+    },
+    [AppRoutes.RIDE_CREATE]: {
+        path: getRideCreate(),
+        element: <CreateRidePage />,
+    },
+    [AppRoutes.RIDE_SAVE]: {
+        path: getRouterSaveRide(':id'),
+        element: <SaveRidePage />,
+    },
+    [AppRoutes.RIDE_CHAT]: {
+        path: getRouteChat(':id'),
+        element: <Chat />,
+    },
+    [AppRoutes.MY_RIDES]: {
+        path: getRouteMyRides(),
+        element: <MyRides />,
     },
 };

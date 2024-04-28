@@ -11,6 +11,7 @@ export function createReduxStore(
     initialState?: StateSchema,
     asyncReducers?: ReducersMapObject<StateSchema>,
 ) {
+    // @ts-ignore
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
@@ -33,6 +34,7 @@ export function createReduxStore(
                 thunk: {
                     extraArgument: extraArg,
                 },
+                serializableCheck:false
             }).concat(rtkApi.middleware),
     });
 

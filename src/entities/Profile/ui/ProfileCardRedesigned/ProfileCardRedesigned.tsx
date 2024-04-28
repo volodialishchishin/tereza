@@ -7,6 +7,7 @@ import { Input } from '@/shared/ui/redesigned/Input';
 import { ProfileCardProps } from '../ProfileCard/ProfileCard';
 import { Skeleton } from '@/shared/ui/redesigned/Skeleton';
 import { Text } from '@/shared/ui/redesigned/Text';
+import { PhotoUpload } from '@/features/editableProfileCard';
 
 export const ProfileCardRedesignedError = () => {
     const { t } = useTranslation();
@@ -59,17 +60,17 @@ export const ProfileCardRedesigned = memo((props: ProfileCardProps) => {
         onChangeLastname,
         onChangeAge,
         onChangeCity,
-        onChangeAvatar,
         onChangeUsername,
+        onChangeAvatar
     } = props;
     const { t } = useTranslation('profile');
-
     return (
         <Card padding="24" border="partial" max className={className}>
             <VStack gap="32">
                 {data?.avatar && (
                     <HStack justify="center" max>
-                        <Avatar size={128} src={data?.avatar} />
+                        {/* // @ts-ignore */}
+                        <Avatar size={128} src={data.avatar} />
                     </HStack>
                 )}
                 <HStack gap="24" max>
@@ -108,12 +109,7 @@ export const ProfileCardRedesigned = memo((props: ProfileCardProps) => {
                             onChange={onChangeUsername}
                             readonly={readonly}
                         />
-                        <Input
-                            value={data?.avatar}
-                            label={t('Аватар')}
-                            onChange={onChangeAvatar}
-                            readonly={readonly}
-                        />
+                        <PhotoUpload onChangeAvatar={onChangeAvatar}/>
                     </VStack>
                 </HStack>
             </VStack>

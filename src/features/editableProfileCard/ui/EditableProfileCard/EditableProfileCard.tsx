@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { memo, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { classNames } from '@/shared/lib/classNames/classNames';
@@ -29,6 +29,8 @@ interface EditableProfileCardProps {
 const reducers: ReducersList = {
     profile: profileReducer,
 };
+
+
 
 export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
     const { className, id } = props;
@@ -69,6 +71,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
 
     const onChangeCity = useCallback(
         (value?: string) => {
+
             dispatch(profileActions.updateProfile({ city: value || '' }));
         },
         [dispatch],
@@ -89,8 +92,10 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
     );
 
     const onChangeAvatar = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ avatar: value || '' }));
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            if (event.target.files && event.target.files[0]){
+                dispatch(profileActions.setFile(event.target.files[0]));
+            }
         },
         [dispatch],
     );

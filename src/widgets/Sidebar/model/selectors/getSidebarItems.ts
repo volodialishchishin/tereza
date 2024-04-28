@@ -8,9 +8,10 @@ import ProfileIcon from '@/shared/assets/icons/avatar.svg';
 
 import { SidebarItemType } from '../types/sidebar';
 import {
+    getRideCreate,
     getRouteAbout,
     getRouteArticles,
-    getRouteMain,
+    getRouteMain, getRouteMyRides,
     getRouteProfile, getRouterCreateRoad,
 } from '@/shared/const/router';
 
@@ -46,9 +47,22 @@ export const useSidebarItems = () => {
             {
                 path: getRouterCreateRoad(),
                 Icon: MainIcon,
-                text: 'Зтворити Маршут',
+                text: 'Cтворити Маршут',
                 authOnly: true,
             },
+            {
+                path: getRideCreate(),
+                Icon: MainIcon,
+                text: 'Cтворити Поїздку',
+                authOnly: true,
+            },
+            {
+                path: getRouteMyRides(),
+                Icon: MainIcon,
+                text: 'Мої поїздки',
+                authOnly: true,
+            },
+
         );
     }
 

@@ -16,6 +16,12 @@ import { UISchema } from '@/features/UI';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { ProfileSchema } from '@/features/editableProfileCard';
 import { RegisterSchema } from '@/features/Registration';
+import { CreateRoadSchema } from '@/features/Map';
+import { CreateRideTypes } from '@/features/RideCreate';
+import { SaveRideTypes } from '@/features/SaveRide';
+import { ChatTypes } from '@/pages/ChatPage';
+import { MyRidesTypes } from '@/pages/MyRides';
+import { UploadPhotoTypes } from '@/features/PhotoUpload';
 
 export interface StateSchema {
     user: UserSchema;
@@ -29,6 +35,12 @@ export interface StateSchema {
     addCommentForm?: AddCommentFormSchema;
     articlesPage?: ArticlesPageSchema;
     articleDetailsPage?: ArticleDetailsPageSchema;
+    createRoadSchema?:CreateRoadSchema,
+    createRideSchema?:CreateRideTypes,
+    saveRideSchema?:SaveRideTypes,
+    chatSchema?:ChatTypes
+    myRideSchema?: MyRidesTypes,
+    uploadPhotoSchema?:UploadPhotoTypes
 }
 
 export type StateSchemaKey = keyof StateSchema;

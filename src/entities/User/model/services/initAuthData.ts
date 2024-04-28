@@ -30,7 +30,6 @@ export const initAuthData = createAsyncThunk<User, void, ThunkConfig<string>>(
 
             return response;
         } catch (e) {
-            console.log(e);
             return rejectWithValue('');
         }
     },

@@ -21,7 +21,6 @@ interface RatingCardProps {
 
 export const RatingCard = memo((props: RatingCardProps) => {
     const {
-        className,
         onAccept,
         feedbackTitle,
         hasFeedback,

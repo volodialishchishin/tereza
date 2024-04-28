@@ -3,12 +3,14 @@ import { Profile } from '@/entities/Profile';
 import { fetchProfileData } from '../services/fetchProfileData/fetchProfileData';
 import { updateProfileData } from '../services/updateProfileData/updateProfileData';
 import { ProfileSchema } from '../types/editableProfileCardSchema';
+import { uploadPhoto } from '../services/uploadPhoto/UploadPhoto';
 
 const initialState: ProfileSchema = {
     readonly: true,
     isLoading: false,
     error: undefined,
     data: undefined,
+    file: null,
 };
 
 export const profileSlice = createSlice({
@@ -29,12 +31,26 @@ export const profileSlice = createSlice({
                 ...action.payload,
             };
         },
+        setFile: (state, action: PayloadAction<File>) => {
+            console.log(action);
+                state.file = action.payload;
+        },
+        updateAvatar: (state, action: PayloadAction<string>) => {
+            if (state.data){
+                state.data.avatar = action.payload;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchProfileData.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
+            })
+            .addCase(uploadPhoto.pending, (state,action) => {
+                if (state.data){
+                    state.data.avatar = action.payload
+                }
             })
             .addCase(
                 fetchProfileData.fulfilled,
@@ -56,7 +72,6 @@ export const profileSlice = createSlice({
                 updateProfileData.fulfilled,
                 (state, action: PayloadAction<Profile>) => {
                     state.isLoading = false;
-                    console.log(action.payload);
                     state.data = action.payload;
                     state.form = action.payload;
                     state.readonly = true;

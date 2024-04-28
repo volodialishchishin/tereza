@@ -63,7 +63,6 @@ const RegistrationForm = memo(({ className, onSuccess }: RegisterFormProps) => {
 
     const onLoginClick = useCallback(async () => {
         const result = await dispatch(registerByUsernameAndEmail({ username, email, password }));
-        console.log(result);
         if (result.meta.requestStatus === 'fulfilled') {
             onSuccess();
             forceUpdate();
