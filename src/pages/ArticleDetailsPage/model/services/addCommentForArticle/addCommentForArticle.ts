@@ -26,9 +26,6 @@ export const addCommentForArticle = createAsyncThunk<
             text,
         });
 
-        if (!response.data) {
-            throw new Error();
-        }
 
         dispatch(fetchCommentsByArticleId(article.id));
 
