@@ -33,28 +33,54 @@ const Chat = (props:{isUserToUser?:boolean}) => {
   useEffect(() => {
     socket.emit("join", { room: id, name: userName, isUserToUser, userId });
 
-  }, [userName,id]);
+    // Cleanup function
+    return () => {
+      socket.off("join");
+    };
+  }, [userName, id, isUserToUser, userId, socket]);
 
   useEffect(() => {
-    socket.on("initMessages", ({ messages, roomId }) => {
-      dispatch(chatActions.setInitMessages(messages))
+    const handleInitMessages = ({ messages, roomId }) => {
+      dispatch(chatActions.setInitMessages(messages));
       if (isUserToUser){
         setRoomId(roomId);
       }
-    });
-  }, [dispatch]);
+    };
+
+    socket.on("initMessages", handleInitMessages);
+
+    // Cleanup function
+    return () => {
+      socket.off("initMessages", handleInitMessages);
+    };
+  }, [dispatch, isUserToUser, socket]);
 
   useEffect(() => {
-    socket.on("message", (data) => {
-      dispatch(chatActions.setMessages(data))
-    });
-  }, [dispatch]);
+    const handleMessage = (data) => {
+      dispatch(chatActions.setMessages(data));
+    };
+
+    socket.on("message", handleMessage);
+
+    // Cleanup function
+    return () => {
+      socket.off("message", handleMessage);
+    };
+  }, [dispatch, socket]);
 
   useEffect(() => {
-    socket.on("room", (users) => {
-      dispatch(chatActions.setUsersLength(users.length))
-    });
-  }, [dispatch]);
+    const handleRoomUpdate = (users) => {
+      dispatch(chatActions.setUsersLength(users.length));
+    };
+
+    socket.on("room", handleRoomUpdate);
+
+    // Cleanup function
+    return () => {
+      socket.off("room", handleRoomUpdate);
+    };
+  }, [dispatch, socket]);
+
 
   const leftRoom = () => {
     navigate("/");
