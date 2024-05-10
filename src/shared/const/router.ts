@@ -15,6 +15,11 @@ export enum AppRoutes {
     RIDE_SAVE = 'ride_save',
     RIDE_CHAT = 'ride_chat',
     MY_RIDES = 'my_rides',
+    USER_LIST = 'user_list',
+    USER_DETAILS = 'user_details',
+    USER_CHAT = 'user_chat',
+    RIDE_DETAILS = 'ride_details',
+    MY_PROFILE = 'my_profile',
 }
 
 export const getRouteMain = () => '/';
@@ -22,6 +27,7 @@ export const getRideCreate = () => `/ride`;
 export const getRouteSettings = () => '/settings';
 export const getRouteAbout = () => '/about';
 export const getRouteProfile = (id: string) => `/profile/${id}`;
+export const getRouteMyProfile = () => `/profile/me`;
 export const getRouteArticles = () => '/articles';
 export const getRouteArticleDetails = (id: string) => `/articles/${id}`;
 export const getRouteArticleCreate = () => '/articles/new';
@@ -31,7 +37,11 @@ export const getRouteForbidden = () => '/forbidden';
 export const getRouterCreateRoad = () => '/road';
 export const getRouterSaveRide = (id:string) => `/ride/${id}`;
 export const getRouteChat = (id:string) => `/ride/${id}/chat`;
+export const getUserChat = (id:string) => `/users/${id}/chat`;
 export const getRouteMyRides = () => `/my-rides`;
+export const getRouteUserLIst = () => `/users`;
+export const getRouteUserDetails= (id:string) => `/users/${id}`;
+export const getRouteRideDetails= (id:string) => `/ride-details/${id}`;
 
 export const AppRouteByPathPattern: Record<string, AppRoutes> = {
     [getRouteMain()]: AppRoutes.MAIN,
@@ -49,4 +59,9 @@ export const AppRouteByPathPattern: Record<string, AppRoutes> = {
     [getRouterSaveRide(':id')]: AppRoutes.RIDE_SAVE,
     [getRouteChat(':id')]: AppRoutes.RIDE_CHAT,
     [getRouteMyRides()]: AppRoutes.MY_RIDES,
+    [getRouteUserLIst()]: AppRoutes.USER_LIST,
+    [getRouteUserDetails(':id')]: AppRoutes.USER_DETAILS,
+    [getUserChat(':id')]: AppRoutes.USER_CHAT,
+    [getRouteRideDetails(':id')]: AppRoutes.RIDE_DETAILS,
+    [getRouteMyProfile()]: AppRoutes.MY_PROFILE,
 };

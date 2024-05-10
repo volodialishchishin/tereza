@@ -54,7 +54,7 @@ const CreateRide = () => {
     }, [fetchData]);
 
     useEffect(() => {
-        if (isMapLoaded && road){
+        if (isMapLoaded && road?.length){
             road?.forEach (e=> {
                 buildRoute(e)
             })
@@ -64,7 +64,7 @@ const CreateRide = () => {
 
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
-            <LoadScript
+            {road?.length &&<LoadScript
                 googleMapsApiKey='AIzaSyCAQVTz4ovEKsi1PguWdsz3PjPTqXGy4LI'
                 onLoad={()=>setIsMapLoaded(true)}
             >
@@ -98,7 +98,7 @@ const CreateRide = () => {
                         })}
                     </div>
                 }
-            </LoadScript>
+            </LoadScript> }
         </DynamicModuleLoader>
 
     );

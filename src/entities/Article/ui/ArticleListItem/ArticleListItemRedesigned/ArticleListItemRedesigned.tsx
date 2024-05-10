@@ -28,10 +28,10 @@ export const ArticleListItemRedesigned = memo((props: ArticleListItemProps) => {
         <>
             <Avatar
                 size={32}
-                src={article.user.avatar}
-                className={cls.avatar}
+                src={article?.user?.avatar }
+                className={cls?.avatar}
             />
-            <Text bold text={article.user.username} />
+            <Text bold text={article?.user?.username} />
         </>
     );
     const views = (
@@ -65,7 +65,7 @@ export const ArticleListItemRedesigned = memo((props: ArticleListItemProps) => {
                     <Text title={article.subtitle} size="s" />
                     <AppImage
                         fallback={<Skeleton width="100%" height={250} />}
-                        src={article.img}
+                        src={article.img || "https://st2.depositphotos.com/7428066/42410/i/450/depositphotos_424109604-stock-photo-shiba-inu-puppy-looks-little.jpg"}
                         className={cls.img}
                         alt={article.title}
                     />
@@ -84,7 +84,6 @@ export const ArticleListItemRedesigned = memo((props: ArticleListItemProps) => {
                                 {t('Читати далі')}
                             </Button>
                         </AppLink>
-                        {views}
                     </HStack>
                 </VStack>
             </Card>
@@ -105,7 +104,7 @@ export const ArticleListItemRedesigned = memo((props: ArticleListItemProps) => {
                 <AppImage
                     fallback={<Skeleton width="100%" height={200} />}
                     alt={article.title}
-                    src={article.img}
+                    src={article.img || "https://st2.depositphotos.com/7428066/42410/i/450/depositphotos_424109604-stock-photo-shiba-inu-puppy-looks-little.jpg"}
                     className={cls.img}
                 />
                 <VStack className={cls.info} gap="4">
@@ -116,7 +115,6 @@ export const ArticleListItemRedesigned = memo((props: ArticleListItemProps) => {
                                 text={article.createdAt}
                                 className={cls.date}
                             />
-                            {views}
                         </HStack>
                         <HStack gap="4">{userInfo}</HStack>
                     </VStack>

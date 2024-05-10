@@ -19,7 +19,13 @@ import {
     getRouteArticles,
     getRouteMain,
     getRouteProfile,
-    getRouteSettings, getRouterCreateRoad, getRideCreate, getRouterSaveRide, getRouteChat, getRouteMyRides,
+    getRouteSettings,
+    getRouterCreateRoad,
+    getRideCreate,
+    getRouterSaveRide,
+    getRouteChat,
+    getRouteMyRides,
+    getRouteUserLIst, getRouteUserDetails, getUserChat, getRouteRideDetails, getRouteMyProfile,
 } from '@/shared/const/router';
 import { AppRoutesProps } from '@/shared/types/router';
 import { SettingsPage } from '@/pages/SettingsPage';
@@ -28,11 +34,28 @@ import { CreateRidePage } from '@/pages/RideCreatePage';
 import { SaveRidePage } from '@/pages/RideSavePage';
 import { Chat } from '@/pages/ChatPage';
 import { MyRides } from '@/pages/MyRides';
+import { UserPage } from '@/pages/UserPage';
+import { UserDetailsPage } from '@/pages/UserDetailsPage';
+import { RideDetailsPage } from '@/pages/RideDetailsPage';
+import { MyProfilePage } from '@/pages/MyPage';
+import { CreateArticle } from '@/pages/ArticleCreatePage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
         path: getRouteMain(),
         element: <MainPage />,
+    },
+    [AppRoutes.USER_LIST]: {
+        path: getRouteUserLIst(),
+        element: <UserPage />,
+    },
+    [AppRoutes.USER_DETAILS]: {
+        path: getRouteUserDetails(':id'),
+        element: <UserDetailsPage />,
+    },
+    [AppRoutes.USER_CHAT]: {
+        path: getUserChat(':id'),
+        element: <Chat isUserToUser />,
     },
     [AppRoutes.SETTINGS]: {
         path: getRouteSettings(),
@@ -59,7 +82,7 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     },
     [AppRoutes.ARTICLE_CREATE]: {
         path: getRouteArticleCreate(),
-        element: <ArticleEditPage />,
+        element: <CreateArticle />,
         authOnly: true,
     },
     [AppRoutes.ARTICLE_EDIT]: {
@@ -82,6 +105,10 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
         path: getRouteForbidden(),
         element: <ForbiddenPage />,
     },
+    [AppRoutes.RIDE_DETAILS]: {
+        path: getRouteRideDetails(':id'),
+        element: <RideDetailsPage />,
+    },
     // last
     [AppRoutes.NOT_FOUND]: {
         path: '*',
@@ -90,6 +117,10 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.RIDE_CREATE]: {
         path: getRideCreate(),
         element: <CreateRidePage />,
+    },
+    [AppRoutes.MY_PROFILE]: {
+        path: getRouteMyProfile(),
+        element: <MyProfilePage />,
     },
     [AppRoutes.RIDE_SAVE]: {
         path: getRouterSaveRide(':id'),

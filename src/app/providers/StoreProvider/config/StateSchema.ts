@@ -21,7 +21,11 @@ import { CreateRideTypes } from '@/features/RideCreate';
 import { SaveRideTypes } from '@/features/SaveRide';
 import { ChatTypes } from '@/pages/ChatPage';
 import { MyRidesTypes } from '@/pages/MyRides';
-import { UploadPhotoTypes } from '@/features/PhotoUpload';
+import { UsersList } from '@/pages/UserPage';
+import { UserDetails } from '@/pages/UserDetailsPage';
+import { RideDetails } from '@/pages/RideDetailsPage';
+import { MyPage } from '@/pages/MyPage';
+import { CreateArticleTypes } from '@/pages/ArticleCreatePage';
 
 export interface StateSchema {
     user: UserSchema;
@@ -40,7 +44,11 @@ export interface StateSchema {
     saveRideSchema?:SaveRideTypes,
     chatSchema?:ChatTypes
     myRideSchema?: MyRidesTypes,
-    uploadPhotoSchema?:UploadPhotoTypes
+    userListSchema?:UsersList
+    userDetailsSchema?:UserDetails,
+    RideDetailsSchema?:RideDetails,
+    myPage?:MyPage,
+    createArticle?: CreateArticleTypes
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -7,6 +7,7 @@ import { fetchRides } from '../model/services/fetchRides';
 import { StateSchema } from '@/app/providers/StoreProvider';
 import { DynamicModuleLoader, ReducersList } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import { myRidesReducer } from '../model/slice/MyRides.slice';
+import { RideCard } from './rideCard';
 
 
 export const MyRides = () => {
@@ -27,13 +28,7 @@ export const MyRides = () => {
             <Page data-testid="MainPage">
                 {rides && rides.length > 0 && rides.map((ride) => {
                     return(
-                        <div key={ride.id} onClick={()=>{
-                            navigate(`/ride/${ride.id}/chat`)
-                        }}>
-                            <div>{ride.title}</div>
-                            <div>{ride.description}</div>
-                            <div>{ride.user_count}</div>
-                        </div>
+                        <RideCard ride={ride} />
                     )
                 })}
             </Page>

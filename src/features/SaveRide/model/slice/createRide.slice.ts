@@ -9,6 +9,7 @@ const  initialState: SaveRideTypes
     usersCount: 0,
     description:'',
     title:'',
+    date:'',
     isMapLoaded: false,
 };
 
@@ -34,6 +35,9 @@ export const saveRideSlice = createSlice({
         },
         setDirection: (state, action:PayloadAction<google.maps.DirectionsResult>) => {
             state.directions = action.payload
+        },
+        setDate: (state, action:PayloadAction<string>) => {
+            state.date = action.payload
         }
     },
     extraReducers: (builder) => {

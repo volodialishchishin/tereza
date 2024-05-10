@@ -14,6 +14,9 @@ import { Text } from '@/shared/ui/redesigned/Text';
 import { Button } from '@/shared/ui/redesigned/Button';
 import { createRide } from '../../model/services/createRide';
 
+const initialReducers: ReducersList = {
+    saveRideSchema: saveRideReducer,
+};
 const SaveRide = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate();
@@ -24,10 +27,9 @@ const SaveRide = () => {
     const description = useSelector((state:StateSchema) => state?.saveRideSchema?.description)
     const title = useSelector((state:StateSchema) => state?.saveRideSchema?.title)
     const usersCount = useSelector((state:StateSchema) => state?.saveRideSchema?.usersCount)
+    const date = useSelector((state:StateSchema) => state?.saveRideSchema?.date)
 
-    const initialReducers: ReducersList = {
-        saveRideSchema: saveRideReducer,
-    };
+
 
     const buildRoute = useCallback( async ()=> {
         if (!window.google || !road) return;
@@ -55,9 +57,6 @@ const SaveRide = () => {
         }
     }, [isMapLoaded, road, buildRoute]);
 
-    const onUserCountChange =(e:React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(saveRideActions.setUserCount(+e.target.value))
-    }
 
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
@@ -99,8 +98,15 @@ const SaveRide = () => {
                     )
                 )
             }  />
+            <Text text="Дата заїзду" />
+            <Input value={date} onChange={(e) =>
+                dispatch(saveRideActions.setDate(
+                        e
+                    )
+                )
+            }  />
             <Button onClick={()=>{
-                dispatch(createRide({usersCount,description, title, roadId:id }))
+                dispatch(createRide({usersCount,description, title, roadId:id, date }))
                 navigate('/')
             }}>Save Ride</Button>
         </DynamicModuleLoader>

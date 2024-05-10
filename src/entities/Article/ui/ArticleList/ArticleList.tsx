@@ -8,6 +8,8 @@ import { ArticleListItem } from '../ArticleListItem/ArticleListItem';
 import cls from './ArticleList.module.scss';
 import { Article } from '../../model/types/article';
 import { HStack } from '@/shared/ui/redesigned/Stack';
+import { UserListItem } from '@/pages/UserPage';
+import { RideCard } from '@/pages/MyRides';
 
 interface ArticleListProps {
     className?: string;
@@ -58,15 +60,33 @@ export const ArticleList = memo((props: ArticleListProps) => {
                             className={classNames(cls.ArticleListRedesigned, {}, [])}
                             data-testid="ArticleList"
                         >
-                            {articles.map((item) => (
-                                <ArticleListItem
-                                    article={item}
-                                    view={view}
-                                    target={target}
-                                    key={item.id}
-                                    className={cls.card}
-                                />
-                            ))}
+                            {articles.map((item) =>
+                                {
+                                    console.log(item);
+                                    if (item.username){
+                                        return <UserListItem user={item}  view={view}
+                                                             target={target}
+                                                             key={item.id}
+                                                             className={cls.card}/>
+                                    }
+                                    if(item.road_id){
+                                        return <RideCard ride={item}  view={view}
+                                                             target={target}
+                                                             key={item.id}
+                                                             className={cls.card}/>
+                                    }
+                                    return(
+                                        <ArticleListItem
+                                            article={item}
+                                            view={view}
+                                            target={target}
+                                            key={item.id}
+                                            className={cls.card}
+                                        />
+                                    )
+                                }
+
+                            )}
                             {isLoading && getSkeletons(view)}
                         </HStack>
     );

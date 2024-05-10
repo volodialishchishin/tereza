@@ -24,6 +24,7 @@ export interface ProfileCardProps {
     onChangeAvatar?: (event:React.ChangeEvent<HTMLInputElement>) => void;
     onChangeCurrency?: (currency: Currency) => void;
     onChangeCountry?: (country: Country) => void;
+    onFileUpload:any
 }
 
 export const ProfileCard = (props: ProfileCardProps) => {

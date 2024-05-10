@@ -15,7 +15,6 @@ import {
 import { Text } from '@/shared/ui/redesigned/Text';
 import { Skeleton as SkeletonRedesigned } from '@/shared/ui/redesigned/Skeleton';
 import { Avatar } from '@/shared/ui/deprecated/Avatar';
-import EyeIcon from '@/shared/assets/icons/eye-20-20.svg';
 import CalendarIcon from '@/shared/assets/icons/calendar-20-20.svg';
 import { Icon } from '@/shared/ui/deprecated/Icon';
 import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
@@ -54,10 +53,6 @@ const Deprecated = () => {
                     size={TextSize.L}
                 />
                 <HStack gap="8" className={cls.articleInfo}>
-                    <Icon className={cls.icon} Svg={EyeIcon} />
-                    <TextDeprecated text={String(article?.views)} />
-                </HStack>
-                <HStack gap="8" className={cls.articleInfo}>
                     <Icon className={cls.icon} Svg={CalendarIcon} />
                     <TextDeprecated text={article?.createdAt} />
                 </HStack>
@@ -69,6 +64,7 @@ const Deprecated = () => {
 
 const Redesigned = () => {
     const article = useSelector(getArticleDetailsData);
+    console.log(article);
 
     return (
         <>
@@ -89,7 +85,6 @@ const Redesigned = () => {
         </>
     );
 };
-
 export const ArticleDetailsSkeleton = () => {
     const Skeleton = SkeletonRedesigned;
     return (

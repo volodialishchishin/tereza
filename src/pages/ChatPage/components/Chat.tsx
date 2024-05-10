@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { io } from "socket.io-client";
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,29 +17,35 @@ const initialReducers: ReducersList = {
 
 const socket = io('http://localhost:3001');
 
-const Chat = () => {
+const Chat = (props:{isUserToUser?:boolean}) => {
+  const {isUserToUser = false} = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const userId = useSelector((state:StateSchema) => state?.user.authData?.id);
   const userName = useSelector((state:StateSchema) => state.user.authData?.username);
   const message = useSelector((state:StateSchema) => state.chatSchema?.message);
   const messages = useSelector((state:StateSchema) => state.chatSchema?.messages) || [];
   const usersCount = useSelector((state:StateSchema) => state.chatSchema?.users);
+  const[roomId, setRoomId] = useState('')
 
 
   useEffect(() => {
-    socket.emit("join", { room: id, name: userName });
+    socket.emit("join", { room: id, name: userName, isUserToUser, userId });
+
   }, [userName,id]);
 
   useEffect(() => {
-    socket.on("initMessages", (data) => {
-      dispatch(chatActions.setInitMessages(data))
+    socket.on("initMessages", ({ messages, roomId }) => {
+      dispatch(chatActions.setInitMessages(messages))
+      if (isUserToUser){
+        setRoomId(roomId);
+      }
     });
   }, [dispatch]);
 
   useEffect(() => {
     socket.on("message", (data) => {
-      console.log(data);
       dispatch(chatActions.setMessages(data))
     });
   }, [dispatch]);
@@ -53,7 +59,7 @@ const Chat = () => {
   const leftRoom = () => {
     navigate("/");
   };
-
+  // @ts-ignore
   const handleChange = (e) => dispatch(chatActions.setMessage(e));
 
   const handleSubmit = (e:any) => {
@@ -61,7 +67,7 @@ const Chat = () => {
 
     if (!message) return;
 
-    socket.emit("sendMessage", { message, params: { room: id, name: userName } });
+    socket.emit("sendMessage", { message, params: { room: isUserToUser? roomId: id, name: userName,isUserToUser, userId } });
 
     dispatch(chatActions.setMessage(""))
   };
@@ -79,7 +85,7 @@ const Chat = () => {
 
           <div className={styles.messages}>
             {/* // @ts-ignore */}
-            <Messages messages={messages} name={userName} />
+            <Messages messages={messages} name={userName || ''} />
           </div>
 
           <form className={styles.form} onSubmit={handleSubmit}>

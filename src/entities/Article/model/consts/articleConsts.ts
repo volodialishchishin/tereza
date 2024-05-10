@@ -11,10 +11,9 @@ export enum ArticleBlockType {
 }
 
 export enum ArticleType {
-    ALL = 'ALL',
-    IT = 'IT',
-    SCIENCE = 'SCIENCE',
-    ECONOMICS = 'ECONOMICS',
+    USER = 'users',
+    ARTICLES = 'articles',
+    RIDES = 'ride',
 }
 
 export enum ArticleView {

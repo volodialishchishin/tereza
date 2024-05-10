@@ -10,7 +10,8 @@ const Messages = ({ messages, name }:Props) => {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // @ts-ignore
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   return (
       <div className={styles.messages}>

@@ -32,7 +32,6 @@ export const profileSlice = createSlice({
             };
         },
         setFile: (state, action: PayloadAction<File>) => {
-            console.log(action);
                 state.file = action.payload;
         },
         updateAvatar: (state, action: PayloadAction<string>) => {
@@ -47,10 +46,9 @@ export const profileSlice = createSlice({
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(uploadPhoto.pending, (state,action) => {
-                if (state.data){
-                    state.data.avatar = action.payload
-                }
+            .addCase(uploadPhoto.fulfilled, (state,action) => {
+                    // @ts-ignore
+                state.form.avatar=action.payload.url
             })
             .addCase(
                 fetchProfileData.fulfilled,

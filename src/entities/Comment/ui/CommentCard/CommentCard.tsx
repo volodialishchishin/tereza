@@ -1,16 +1,11 @@
 import { memo } from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
-import { Avatar as AvatarDeprecated } from '@/shared/ui/deprecated/Avatar';
-import { Text as TextDeprecated } from '@/shared/ui/deprecated/Text';
 import { Text } from '@/shared/ui/redesigned/Text';
-import { Skeleton as SkeletonDeprecated } from '@/shared/ui/deprecated/Skeleton';
 import { Skeleton as SkeletonRedesigned } from '@/shared/ui/redesigned/Skeleton';
-import { AppLink as AppLinkDeprecated } from '@/shared/ui/deprecated/AppLink';
 import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
 import cls from './CommentCard.module.scss';
 import { Comment } from '../../model/types/comment';
 import { getRouteProfile } from '@/shared/const/router';
-import { ToggleFeatures, toggleFeatures } from '@/shared/lib/features';
 import { Card } from '@/shared/ui/redesigned/Card';
 import { AppLink } from '@/shared/ui/redesigned/AppLink';
 import { Avatar } from '@/shared/ui/redesigned/Avatar';
@@ -66,16 +61,16 @@ export const CommentCard = memo((props: CommentCardProps) => {
                             >
                                 <AppLink to={getRouteProfile(comment.user.id)}>
                                     <HStack gap="8">
-                                        {comment.user.avatar ? (
+                                        {comment.user?.avatar ? (
                                             <Avatar
                                                 size={30}
                                                 src={comment.user.avatar}
                                             />
                                         ) : null}
-                                        <Text text={comment.user.username} bold />
+                                        <Text text={comment.user?.username} bold />
                                     </HStack>
                                 </AppLink>
-                                <Text text={comment.text} />
+                                <Text text={comment?.text} />
                             </VStack>
                         </Card>
     );

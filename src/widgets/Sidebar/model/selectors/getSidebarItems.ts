@@ -11,8 +11,7 @@ import {
     getRideCreate,
     getRouteAbout,
     getRouteArticles,
-    getRouteMain, getRouteMyRides,
-    getRouteProfile, getRouterCreateRoad,
+    getRouteMain, getRouteMyProfile, getRouteMyRides, getRouterCreateRoad, getRouteUserLIst,
 } from '@/shared/const/router';
 
 export const useSidebarItems = () => {
@@ -33,9 +32,9 @@ export const useSidebarItems = () => {
     if (userData) {
         sidebarItemsList.push(
             {
-                path: getRouteProfile(userData.id),
+                path: getRouteMyProfile(),
                 Icon: ProfileIcon,
-                text: 'Профіль',
+                text: 'Моя сторінка',
                 authOnly: true,
             },
             {
@@ -60,6 +59,12 @@ export const useSidebarItems = () => {
                 path: getRouteMyRides(),
                 Icon: MainIcon,
                 text: 'Мої поїздки',
+                authOnly: true,
+            },
+            {
+                path: getRouteUserLIst(),
+                Icon: MainIcon,
+                text: 'Мої чати',
                 authOnly: true,
             },
 

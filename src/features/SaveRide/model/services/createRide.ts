@@ -3,10 +3,11 @@ import { ThunkConfig } from '@/app/providers/StoreProvider';
 import { Road } from '@/entities/Road';
 
 interface createRoadProps {
-    title:string,
-    description:string,
-    roadId:string,
-    usersCount:number,
+    title?:string,
+    description?:string,
+    roadId?:string,
+    usersCount?:number,
+    date?:string
 }
 
 export const createRide = createAsyncThunk<

@@ -20,6 +20,8 @@ import { getProfileValidateErrors } from '../../model/selectors/getProfileValida
 import { fetchProfileData } from '../../model/services/fetchProfileData/fetchProfileData';
 import { profileActions, profileReducer } from '../../model/slice/profileSlice';
 import { EditableProfileCardHeader } from '../EditableProfileCardHeader/EditableProfileCardHeader';
+import { StateSchema } from '@/app/providers/StoreProvider';
+import { uploadPhoto } from '../../model/services/uploadPhoto/UploadPhoto';
 
 interface EditableProfileCardProps {
     className?: string;
@@ -42,6 +44,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
     const error = useSelector(getProfileError);
     const readonly = useSelector(getProfileReadonly);
     const validateErrors = useSelector(getProfileValidateErrors);
+    const file = useSelector((state:StateSchema) => state.profile?.file)
 
     const validateErrorTranslates = {
         [ValidateProfileError.SERVER_ERROR]: t(
@@ -100,6 +103,14 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
         [dispatch],
     );
 
+    const onFileUpload = async () => {
+        const formData = new FormData();
+        if (file){
+            formData.append("file", file);
+            dispatch(uploadPhoto({file:formData}))
+        }
+    };
+
 
     return (
         <DynamicModuleLoader reducers={reducers}>
@@ -124,6 +135,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
                     onChangeCity={onChangeCity}
                     onChangeUsername={onChangeUsername}
                     onChangeAvatar={onChangeAvatar}
+                    onFileUpload={onFileUpload}
                 />
             </VStack>
         </DynamicModuleLoader>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { Article, ArticleType } from '@/entities/Article';
+import { Article } from '@/entities/Article';
 import { addQueryParams } from '@/shared/lib/url/addQueryParams/addQueryParams';
 import {
     getArticlesPageLimit,
@@ -35,15 +35,14 @@ export const fetchArticlesList = createAsyncThunk<
             search,
             type,
         });
-        const response = await extra.api.get<Article[]>('/articles', {
+        const response = await extra.api.get<Article[]>(`/${type}`, {
             params: {
                 _expand: 'user',
                 _limit: limit,
                 _page: page,
                 _sort: sort,
                 _order: order,
-                q: search,
-                type: type === ArticleType.ALL ? undefined : type,
+                q: search
             },
         });
 
