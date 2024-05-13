@@ -5,6 +5,7 @@ import {
 } from '@react-google-maps/api';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Input } from '@/shared/ui/redesigned/Input';
 import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
 import cls from './map.module.scss'
@@ -17,17 +18,22 @@ import { DynamicModuleLoader, ReducersList } from '@/shared/lib/components/Dynam
 
 
 import { createRoad } from '../../model/services/creatRoad';
+import { getRideCreate } from '@/shared/const/router';
+import { Text } from '@/shared/ui/redesigned/Text';
 
 const places : Libraries = ['places']
 export const CreateRoad = () => {
     const dispatch = useAppDispatch();
-
+    const navigate = useNavigate()
     const initialReducers: ReducersList = {
         createRoadSchema: createRoadReducer,
     };
 
     const { t } = useTranslation();
     const createRoadData = useSelector((state:StateSchema) => state?.createRoadSchema)
+    const title = useSelector((state:StateSchema) => state?.createRoadSchema?.title)
+
+    console.log(title);
 
     const buildRoute = () => {
         const {google} = window
@@ -50,10 +56,13 @@ export const CreateRoad = () => {
             (result, status) => {
                 if (!(status === window.google.maps.DirectionsStatus.OK && result))
                 {
-                    console.error(`Error fetching directions ${result}`);
+
                     return
                 }
+                console.log(result);
                 dispatch(createRoadActions.setDirections(result));
+                dispatch(createRoadActions.setTime(result.routes[0].legs[0].duration.text));
+                dispatch(createRoadActions.setDistance(result.routes[0].legs[0].distance.text));
 
             }
         );
@@ -139,20 +148,22 @@ export const CreateRoad = () => {
     };
 
     const onSaveClick = useCallback(async () => {
-        const result = await dispatch(createRoad(
+        console.log('onSaveClick', createRoadData?.title);
+        const result =  await dispatch(createRoad(
             // @ts-ignore
             { waypoints:createRoadData?.waypoints,
                 // @ts-ignore
                 finishMark: createRoadData?.finishMark,
                 // @ts-ignore
-                startMark:createRoadData?.startMark
+                startMark:createRoadData?.startMark,
+                title: createRoadData?.title,
             }
         ));
-        dispatch(createRoadActions.setIsSaved(true))
+        navigate(getRideCreate())
     }, [createRoadData?.waypoints, createRoadData?.finishMark, dispatch, createRoadData?.startMark]);
 
     const waypointInputs = createRoadData?.waypoints.map((waypoint, index) => (
-        <>
+        <VStack gap="32" justify="center" align="center" className={cls.border}>
             <Autocomplete
                 onLoad={autocomplete => onLoadAutocomplete(autocomplete, index)} className={cls.autoComplete}>
                 <Input
@@ -160,14 +171,16 @@ export const CreateRoad = () => {
                     onChange={(e) => updateWaypoint(index, e, null)}
                 />
             </Autocomplete>
-            <Button onClick={() => {
-                dispatch(createRoadActions.setActiveInput(index))
-            }} variant={(createRoadData?.activeInput &&
-                createRoadData?.activeInput!==-1 &&
-                createRoadData?.activeInput!==-2) || createRoadData?.activeInput===0
-                ? "filled" : "outline"}>{t("Set on Map") }</Button>
-            <Button onClick={() => removeWaypoint(index)} >{t("Remove") }</Button>
-        </>
+            <HStack gap="16" >
+                <Button onClick={() => {
+                    dispatch(createRoadActions.setActiveInput(index))
+                }} variant={(createRoadData?.activeInput &&
+                    createRoadData?.activeInput!==-1 &&
+                    createRoadData?.activeInput!==-2) || createRoadData?.activeInput===0
+                    ? "filled" : "outline"}>{t("Встановити зупинку на карті") }</Button>
+                <Button onClick={() => removeWaypoint(index)} >{t("Видалити") }</Button>
+            </HStack>
+        </VStack>
     ));
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
@@ -175,60 +188,79 @@ export const CreateRoad = () => {
                 {/* eslint-disable-next-line i18next/no-literal-string */}
                 <LoadScript libraries={places} googleMapsApiKey='AIzaSyCAQVTz4ovEKsi1PguWdsz3PjPTqXGy4LI'>
                     <VStack justify="center" align="center" gap="32" max>
-                        <HStack max>
-                            <VStack max gap="32">
-                                <Autocomplete
-                                    onLoad={autocomplete =>
-                                        onLoadAutocomplete(autocomplete, -1)}
-                                    className={cls.autoComplete}
-                                >
-                                    <Input
-                                        value={createRoadData?.startMark.location}
-                                        onChange={(e) =>
-                                            dispatch(createRoadActions.setStartMark(
-                                                // @ts-ignore
-                                                    { ...createRoadData?.startMark, location: e }
+                        <VStack max justify="center" align="center" gap="32" >
+                            <HStack max gap="32" wrap="wrap" >
+                                <VStack justify="center" gap="32" align="center" className={cls.border}>
+                                    <Autocomplete
+                                        onLoad={autocomplete =>
+                                            onLoadAutocomplete(autocomplete, -1)}
+                                        className={cls.autoComplete}
+                                    >
+                                        <Input
+                                            value={createRoadData?.startMark.location}
+                                            onChange={(e) =>
+                                                dispatch(createRoadActions.setStartMark(
+                                                        // @ts-ignore
+                                                        { ...createRoadData?.startMark, location: e }
+                                                    )
                                                 )
-                                            )
-                                        }
-                                    />
-                                </Autocomplete>
-                                <Button variant={
-                                    createRoadData?.activeInput
-                                    &&
-                                    createRoadData?.activeInput === -1 ? "clear" : "outline"}
-                                        onClick={() => dispatch(createRoadActions.setActiveInput(-1))}>
-                                    {t("Set on Start")}
-                                </Button>
+                                            }
+                                        />
+                                    </Autocomplete>
+                                    <Button variant={
+                                        createRoadData?.activeInput
+                                        &&
+                                        createRoadData?.activeInput === -1 ? "clear" : "outline"}
+                                            onClick={() => dispatch(createRoadActions.setActiveInput(-1))}>
+                                        {t("Встановити початкову точку на карті")}
+                                    </Button>
+                                </VStack>
                                 {waypointInputs}
-                                <Autocomplete
-                                    onLoad={autocomplete => onLoadAutocomplete(autocomplete, -2)}
-                                    className={cls.autoComplete}
-                                >
-                                    <Input
-                                        value={createRoadData?.finishMark.location}
-                                        onChange={(e) =>
-                                            dispatch(createRoadActions.setFinishMark(
-                                                // @ts-ignore
-                                                { ...createRoadData.finishMark, location: e }
-                                            ))}
-                                    />
-                                </Autocomplete>
-                                <Button variant={
-                                    createRoadData?.activeInput
-                                    &&
-                                    createRoadData?.activeInput === -2 ? "clear" : "outline"}
-                                        onClick={() => dispatch(createRoadActions.setActiveInput(-2))}>
-                                    {t("Set on Start")}
-                                </Button>
+                                <VStack gap="32" justify="center" align="center" className={cls.border}>
+                                    <Autocomplete
+                                        onLoad={autocomplete => onLoadAutocomplete(autocomplete, -2)}
+                                        className={cls.autoComplete}
+                                    >
+                                        <Input
+                                            value={createRoadData?.finishMark.location}
+                                            onChange={(e) =>
+                                                dispatch(createRoadActions.setFinishMark(
+                                                    // @ts-ignore
+                                                    { ...createRoadData.finishMark, location: e }
+                                                ))}
+                                        />
+                                    </Autocomplete>
+                                    <Button variant={
+                                        createRoadData?.activeInput
+                                        &&
+                                        createRoadData?.activeInput === -2 ? "clear" : "outline"}
+                                            onClick={() => dispatch(createRoadActions.setActiveInput(-2))}>
+                                        {t("Встановити кінцеву точку на карті")}
+                                    </Button>
+                                </VStack>
 
-                            </VStack>
-                            <HStack gap="32" max justify="start" align="end">
-                                <Button disabled={createRoadData?.isSaved} onClick={addWaypoint}>{t("Add Waypoint")}</Button>
-                                <Button disabled={createRoadData?.isSaved} onClick={buildRoute}> {t('Build Route')}</Button>
-                                <Button disabled={createRoadData?.isSaved} onClick={onSaveClick}> {t('Save')}</Button>
                             </HStack>
-                        </HStack>
+                            <HStack max>
+                                <Text text="Ведіть назву" />
+                                <Input key="stepan" value={createRoadData?.title} onChange={(e) =>
+                                    dispatch(createRoadActions.setTitle(e))
+                                }/>
+                            </HStack>
+                            <HStack gap="32" max justify="center" align="center"
+className={cls.border}>
+                                <Button  onClick={addWaypoint}>{t("Добавити зупинку")}</Button>
+                                <Button  onClick={buildRoute}> {t('Побудувати Маршут')}</Button>
+                                <Button  onClick={onSaveClick}> {t('Зберегти Маршут')}</Button>
+                            </HStack>
+                            {
+                                createRoadData?.time ? <HStack gap="32" max justify="center" align="center"
+className={cls.border}>
+                                    <Text text={createRoadData?.time}> </Text>
+                                    <Text text={createRoadData?.distance}> </Text>
+                                </HStack> : <div/>
+                            }
+
+                        </VStack>
 
 
                         <Map onMapClick={onMapClick}

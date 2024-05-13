@@ -11,13 +11,19 @@ const initialState: CreateRoadSchema
     finishMark: {location:'', position:null},
     activeInput: null,
     id:'',
-    isSaved:false
+    isSaved:false,
+    title:'Моя улюблена поїздка',
+    distance: '',
+    time:'',
 };
 
 export const createRoadSlice = createSlice({
     name: 'createRoad',
     initialState,
     reducers: {
+        setTitle: (state, action: PayloadAction<string>) => {
+            state.title = action.payload;
+        },
         setWaypoints: (state, action: PayloadAction<Location[]>) => {
             state.waypoints = action.payload;
         },
@@ -39,6 +45,12 @@ export const createRoadSlice = createSlice({
         setIsSaved: (state, action: PayloadAction<boolean>) => {
             state.isSaved = action.payload;
         },
+        setTime: (state, action: PayloadAction<string>) => {
+            state.time = action.payload;
+        },
+        setDistance: (state, action: PayloadAction<string>) => {
+            state.distance = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder

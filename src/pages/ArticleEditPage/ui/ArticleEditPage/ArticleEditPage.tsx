@@ -17,9 +17,7 @@ const ArticleEditPage = memo((props: ArticleEditPageProps) => {
 
     return (
         <Page className={classNames(cls.ArticleEditPage, {}, [className])}>
-            {isEdit
-                ? t('Редегування статті з ID = ') + id
-                : t('Створення нової статі')}
+            Стаття з айді {id} була видалена
         </Page>
     );
 });

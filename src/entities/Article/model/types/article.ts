@@ -29,6 +29,7 @@ export type ArticleBlock =
     | ArticleTextBlock;
 
 export interface Article {
+    canBeDeleted: boolean;
     id: string;
     title: string;
     user: User;

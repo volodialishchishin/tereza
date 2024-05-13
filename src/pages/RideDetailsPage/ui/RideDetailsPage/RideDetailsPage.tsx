@@ -16,6 +16,8 @@ import { applyToRide } from '../../model/services/applyToRide';
 import { unApplyToRide } from '../../model/services/unApplyToRide';
 import { rideDetailsActions, rideDetailsReducer } from '../../model/slice/rideDetails.slice';
 import { Map } from '@/features/Map';
+import { deleteRide } from '../../model/services/deleteRide/deleteRide';
+import { getRouteMyRides } from '@/shared/const/router';
 
 const initialReducers: ReducersList = {
     RideDetailsSchema: rideDetailsReducer,
@@ -33,6 +35,7 @@ export const RideDetailsPage = memo(() => {
     const road = useSelector((state:StateSchema) => state?.RideDetailsSchema?.road)
     const directions = useSelector((state:StateSchema) => state?.RideDetailsSchema?.directions)
     const isMapLoaded = useSelector((state:StateSchema) => state?.RideDetailsSchema?.isMapLoaded)
+    console.log(road?.direction);
     const buildRoute = useCallback( async ()=> {
         if (!window.google || !road) return;
 
@@ -97,16 +100,29 @@ export const RideDetailsPage = memo(() => {
                     </LoadScript>
                     <VStack align="center" max gap="16">
                         <HStack justify="center" gap="8" max>
-                            <Text title="title" />
+                            <Text title="Назва" />
                             <Text title={ride?.title || 'інформація не вказана'}  />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="description" />
+                            <Text title="Опис" />
                             <Text title={ride?.description || 'інформація не вказана'}  />
                         </HStack>
 
+                        {directions?.routes[0].legs[0].distance?.text && <>
+                            <HStack justify="center" gap="8" max>
+                                <Text title="Час" />
+                                <Text title={directions?.routes[0].legs[0].duration?.text || 'інформація не вказана'}  />
+                            </HStack>
+
+                            <HStack justify="center" gap="8" max>
+                                <Text title="Дистанція" />
+                                <Text title={directions?.routes[0].legs[0].distance?.text || 'інформація не вказана'}  />
+                            </HStack>
+                        </>}
+
+
                         <HStack justify="center" gap="8" max>
-                            <Text title="User Count"  />
+                            <Text title="Число користувачів"  />
                             <Text title={`${ride?.current_user_count?.toString()  }/${  ride?.user_count?.toString()}` || 'інформація не вказана'} />
                         </HStack>
 
@@ -125,6 +141,11 @@ export const RideDetailsPage = memo(() => {
                             <Button onClick={()=>{
                                 navigate(`/ride/${ride?.id}/chat`)
                             }}>Почати чат</Button>
+
+                            {ride?.canBeDeleted && <Button onClick={()=>{
+                                dispatch(deleteRide(ride?.id))
+                                navigate(getRouteMyRides())
+                            }}>Видалити</Button>}
                         </HStack>
                     </VStack>
                 </VStack>

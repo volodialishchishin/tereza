@@ -4,6 +4,7 @@ import { fetchRideData, fetchRoad } from '../services/fetchRideData';
 import { applyToRide } from '../services/applyToRide';
 import { unApplyToRide } from '../services/unApplyToRide';
 import { Road } from '@/entities/Road';
+import { deleteRide } from '../services/deleteRide/deleteRide';
 
 const  initialState: RideDetails
     = {
@@ -58,6 +59,9 @@ export const rideDetailsSlice = createSlice({
                     state.ride.isApplied = false;
                 }
             )
+            .addCase(deleteRide.fulfilled, (state, action: PayloadAction) => {
+
+            })
     },
 });
 

@@ -27,6 +27,8 @@ export const AdditionalInfoContainer = memo(() => {
             <ArticleAdditionalInfo
                 onEdit={onEditArticle}
                 author={article.user}
+                id={article.id}
+                canBeDeleted = {article.canBeDeleted}
                 createdAt={article.createdAt}
                 views={article.views}
             />

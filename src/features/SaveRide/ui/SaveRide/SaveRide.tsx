@@ -13,6 +13,8 @@ import { Input } from '@/shared/ui/redesigned/Input';
 import { Text } from '@/shared/ui/redesigned/Text';
 import { Button } from '@/shared/ui/redesigned/Button';
 import { createRide } from '../../model/services/createRide';
+import { VStack } from '@/shared/ui/redesigned/Stack';
+import { getRouteMyRides } from '@/shared/const/router';
 
 const initialReducers: ReducersList = {
     saveRideSchema: saveRideReducer,
@@ -60,55 +62,59 @@ const SaveRide = () => {
 
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
-            <LoadScript
-                googleMapsApiKey='AIzaSyCAQVTz4ovEKsi1PguWdsz3PjPTqXGy4LI'
-                onLoad={()=>dispatch(saveRideActions.setIsMapLoaded(true))}
-            >
+            <VStack justify="center" align="center" gap="32">
+                <LoadScript
+                    googleMapsApiKey='AIzaSyCAQVTz4ovEKsi1PguWdsz3PjPTqXGy4LI'
+                    onLoad={()=>dispatch(saveRideActions.setIsMapLoaded(true))}
+                >
 
-                                    <Map startMark={road?.startMark}
-                                         finishMark={road?.finishMark}
-                                         waypoints={road?.waypoints}
-                                         directions={directions}
-                                         mapContainerStyle={{
-                                             width:"300px",
-                                             height:"300px"
-                                         }}
-                                    />
+                    <Map startMark={road?.startMark}
+                         finishMark={road?.finishMark}
+                         waypoints={road?.waypoints}
+                         directions={directions}
+                         mapContainerStyle={{
+                             width:"500px",
+                             height:"500px"
+                         }}
+                    />
 
-            </LoadScript>
+                </LoadScript>
 
-            <Text text="Title" />
-            <Input value={title} onChange={(e) =>
-                dispatch(saveRideActions.setTitle(
-                        e
-                    )
-                )
-            } />
-            <Text text="description" />
-            <Input value={description} onChange={(e) =>
-                dispatch(saveRideActions.setDescription(
-                        e
-                    )
-                )
-            }  />
-            <Text text="User Count" />
-            <Input value={usersCount} onChange={(e) =>
-                dispatch(saveRideActions.setUserCount(
-                        +e
-                    )
-                )
-            }  />
-            <Text text="Дата заїзду" />
-            <Input value={date} onChange={(e) =>
-                dispatch(saveRideActions.setDate(
-                        e
-                    )
-                )
-            }  />
-            <Button onClick={()=>{
-                dispatch(createRide({usersCount,description, title, roadId:id, date }))
-                navigate('/')
-            }}>Save Ride</Button>
+                <VStack max justify="center" align="center" gap="8">
+                    <Text text="Заголовок" />
+                    <Input value={title} onChange={(e) =>
+                        dispatch(saveRideActions.setTitle(
+                                e
+                            )
+                        )
+                    } />
+                    <Text text="Опис" />
+                    <Input value={description} onChange={(e) =>
+                        dispatch(saveRideActions.setDescription(
+                                e
+                            )
+                        )
+                    }  />
+                    <Text text="Максимальне число користувачів" />
+                    <Input value={usersCount} onChange={(e) =>
+                        dispatch(saveRideActions.setUserCount(
+                                +e
+                            )
+                        )
+                    }  />
+                    <Text text="Дата заїзду" />
+                    <Input value={date} onChange={(e) =>
+                        dispatch(saveRideActions.setDate(
+                                e
+                            )
+                        )
+                    }  />
+                    <Button onClick={()=>{
+                        dispatch(createRide({usersCount,description, title, roadId:id, date }))
+                        navigate(getRouteMyRides())
+                    }}>Save Ride</Button>
+                </VStack>
+            </VStack>
         </DynamicModuleLoader>
 
     );

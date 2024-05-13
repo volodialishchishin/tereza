@@ -9,7 +9,7 @@ export const fetchRides = createAsyncThunk<
     const { extra, rejectWithValue } = thunkApi;
 
     try {
-        const response = await extra.api.get(`/ride`);
+        const response = await extra.api.get(`/ride/user_owner`);
 
         if (!response.data) {
             throw new Error();

@@ -11,5 +11,8 @@ export type CreateRoadSchema = {
     waypoints: Array<Location>;
     activeInput:number | null;
     id:string
-    isSaved:boolean
+    isSaved:boolean,
+    title:string,
+    distance: string,
+    time: string
 }

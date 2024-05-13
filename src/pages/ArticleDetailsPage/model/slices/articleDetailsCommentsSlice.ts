@@ -8,6 +8,7 @@ import { Comment } from '@/entities/Comment';
 import { StateSchema } from '@/app/providers/StoreProvider';
 import { fetchCommentsByArticleId } from '../services/fetchCommentsByArticleId/fetchCommentsByArticleId';
 import { ArticleDetailsCommentsSchema } from '../types/ArticleDetailsCommentsSchema';
+import { deleteArticle } from '../services/deleteArticle/deleteArticle';
 
 const commentsAdapter = createEntityAdapter<Comment>({
     selectId: (comment) => comment.id,
@@ -45,6 +46,9 @@ const articleDetailsCommentsSlice = createSlice({
             .addCase(fetchCommentsByArticleId.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+            })
+            .addCase(deleteArticle.fulfilled, (state, action) => {
+                state.isLoading = false;
             });
     },
 });

@@ -7,17 +7,20 @@ interface createRoadProps {
     waypoints: Array<Location>;
     finishMark:Location;
     startMark: Location;
+    title: string
 }
 
 export const createRoad = createAsyncThunk<
     Road,
     createRoadProps,
     ThunkConfig<string>
->('createRoad/registerByUsername', async (createRoadData, thunkApi) => {
-    const { extra, dispatch, rejectWithValue } = thunkApi;
+>('createRoad/createRoad', async (createRoadData, thunkApi) => {
+    const { extra, dispatch, rejectWithValue, getState } = thunkApi;
+    const {title} = getState().createRoadSchema
 
     try {
-        const { data, status } = await extra.api.post<Road>('/road', createRoadData);
+        console.log(createRoadData);
+        const { data, status } = await extra.api.post<Road>('/road', { ...createRoadData,title });
 
         if (status !==201) {
             throw new Error();
